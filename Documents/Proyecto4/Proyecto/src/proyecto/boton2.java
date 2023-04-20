@@ -111,7 +111,7 @@ public class boton2 extends javax.swing.JFrame {
             {"a","e","i","o","u"}};
         int categoria=(int)(Math.random()*2);
         int palabra=(int)(Math.random()*5);
-            tematica=lista[categoria][palabra];
+            
             
         if (categoria==0){
             
