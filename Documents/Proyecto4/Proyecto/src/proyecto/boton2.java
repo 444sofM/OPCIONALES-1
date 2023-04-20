@@ -114,15 +114,15 @@ public class boton2 extends javax.swing.JFrame {
             tematica=lista[categoria][palabra];
             
         if (categoria==0){
-            .setText("Animales");
+            
             
             
         }
          if (categoria==1){
-            .setText("Frutas");
+            
     }
          if (categoria==2){
-            .setText("Letras");
+            
          }
     /**
      * @param args the command line arguments
