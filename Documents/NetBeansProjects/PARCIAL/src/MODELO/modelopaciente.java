@@ -18,6 +18,14 @@ public class modelopaciente {
     private String apellidop;
     private ArrayList<String>Alergias;
 
+    public ArrayList<String> getAlergias() {
+        return Alergias;
+    }
+
+    public void setAlergias(String alergia) {
+        Alergias.add(alergia);
+    }
+
     public modelopaciente(String idp, String nombrep, String direccionp, String telefonop, String apellidop, ArrayList<String> Alergias) {
         this.idp = idp;
         this.nombrep = nombrep;
@@ -25,6 +33,7 @@ public class modelopaciente {
         this.telefonop = telefonop;
         this.apellidop = apellidop;
         this.Alergias = Alergias;
+        
     }
 
     public modelopaciente(String idp, String nombrep, String direccionp, String telefonop, String apellidop) {
@@ -33,6 +42,7 @@ public class modelopaciente {
         this.direccionp = direccionp;
         this.telefonop = telefonop;
         this.apellidop = apellidop;
+        Alergias = new ArrayList<>();
     }
    
 

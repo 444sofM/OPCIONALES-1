@@ -3,22 +3,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package VISTAS;
-
+import MODELO.modeloalergias;
+import MODELO.modelopaciente;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import CONTROLADOR.ControladorAlergias;
+import CONTROLADOR.ControladorPacientes;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
 public class VentanaPaciente extends javax.swing.JFrame {
+    
+    private ControladorPacientes informacionPacientes;
+    private ControladorAlergias informacionAlergias;
 
     /**
      * Creates new form VentanaPaciente
      */
     public VentanaPaciente() {
         initComponents();
+        
+        informacionPacientes = new ControladorPacientes();
+        informacionAlergias = new ControladorAlergias();
+        
     }
 
     /**
@@ -92,6 +104,11 @@ public class VentanaPaciente extends javax.swing.JFrame {
         btnactualizar.setText("ACTUALIZAR");
 
         btnagregarusuario.setText("GRABAR");
+        btnagregarusuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnagregarusuarioActionPerformed(evt);
+            }
+        });
 
         btnsalir.setText("SALIR");
 
@@ -100,6 +117,11 @@ public class VentanaPaciente extends javax.swing.JFrame {
         jScrollPane2.setViewportView(listAlergiasp);
 
         btnbuscar.setText("BUSCAR");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,11 +166,15 @@ public class VentanaPaciente extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnactualizar)
-                                    .addComponent(btnagregarusuario)
-                                    .addComponent(btnsalir)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(45, 45, 45)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnactualizar)
+                                            .addComponent(btnagregarusuario)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addComponent(btnsalir))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(boxAlergiasp, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(55, 55, 55)
@@ -183,18 +209,18 @@ public class VentanaPaciente extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boxAlergiasp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlergias))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(btnactualizar)
                         .addGap(35, 35, 35)
-                        .addComponent(btnagregarusuario))
+                        .addComponent(btnagregarusuario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnsalir))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12)
-                .addComponent(btnsalir)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,12 +242,54 @@ public class VentanaPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_apellidopActionPerformed
 
     private void btnAlergiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlergiasActionPerformed
-        // TODO add your handling code here:
+       String alergiaSelected = (String) boxAlergiasp.getSelectedItem();
+       
+       String textoAnterior = listAlergiasp.getText();
+       String nuevoTexto = textoAnterior + "\n" + alergiaSelected;
+       listAlergiasp.setText(nuevoTexto);
+       
+       
+       
+        
     }//GEN-LAST:event_btnAlergiasActionPerformed
 
     private void idpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idpActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idpActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        String cc = idp.getText();
+
+        modelopaciente paciente = informacionPacientes.buscarPaciente(cc);
+
+        if (paciente == null) {
+            JOptionPane.showMessageDialog(this, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            
+        } else {
+            nombrep.setText(paciente.getNombrep());
+            apellidop.setText(paciente.getApellidop());
+            telefonop.setText(String.valueOf(paciente.getTelefonop()));
+            direccionp.setText(paciente.getDireccionp());
+            
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
+    private void btnagregarusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarusuarioActionPerformed
+        
+        
+        String nombre = nombrep.getText();
+        String apellido = apellidop.getText();
+        String cc = idp.getText();
+        String direccion = direccionp.getText();
+        String telefono = telefonop.getText();
+
+        modelopaciente paciente = new modelopaciente(cc, nombre, direccion, telefono, apellido, new ArrayList<>());
+        
+        informacionPacientes.agregarPaciente(paciente);
+
+        // Mostrar un mensaje indicando que el paciente se ha agregado correctamente
+        JOptionPane.showMessageDialog(this, "agregado Exitosamente");
+    }//GEN-LAST:event_btnagregarusuarioActionPerformed
 
  
 

@@ -17,6 +17,11 @@ public class modeloalergias {
         this.nombre_a = nombre_a;
     }
 
+    public modeloalergias(String nombre_a) {
+        this.nombre_a = nombre_a;
+    }
+    
+
     public String getId_a() {
         return id_a;
     }
