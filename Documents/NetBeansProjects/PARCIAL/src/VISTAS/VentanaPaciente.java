@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import CONTROLADOR.ControladorAlergias;
 import CONTROLADOR.ControladorPacientes;
+import DAO.DAOpaciente;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -30,6 +31,8 @@ public class VentanaPaciente extends javax.swing.JFrame {
         
         informacionPacientes = new ControladorPacientes();
         informacionAlergias = new ControladorAlergias();
+        
+        DAOpaciente mapa = new DAO.DAOpaciente();
         
     }
 
@@ -63,6 +66,7 @@ public class VentanaPaciente extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listAlergiasp = new javax.swing.JTextArea();
         btnbuscar = new javax.swing.JButton();
+        limpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +106,11 @@ public class VentanaPaciente extends javax.swing.JFrame {
         });
 
         btnactualizar.setText("ACTUALIZAR");
+        btnactualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnactualizarActionPerformed(evt);
+            }
+        });
 
         btnagregarusuario.setText("GRABAR");
         btnagregarusuario.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +120,11 @@ public class VentanaPaciente extends javax.swing.JFrame {
         });
 
         btnsalir.setText("SALIR");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsalirActionPerformed(evt);
+            }
+        });
 
         listAlergiasp.setColumns(20);
         listAlergiasp.setRows(5);
@@ -120,6 +134,13 @@ public class VentanaPaciente extends javax.swing.JFrame {
         btnbuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnbuscarActionPerformed(evt);
+            }
+        });
+
+        limpiar.setText("Limpiar");
+        limpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limpiarActionPerformed(evt);
             }
         });
 
@@ -134,51 +155,49 @@ public class VentanaPaciente extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(idp, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61)
-                                .addComponent(btnbuscar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(apellidop, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(telefonop)))
-                                .addGap(140, 140, 140)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(apellidop, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(telefonop)))
+                                        .addGap(140, 140, 140)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel6))))
+                                            .addComponent(jLabel5)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel3)
+                                                    .addComponent(jLabel6)))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(idp, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(nombrep, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                                    .addComponent(direccionp)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnbuscar)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(nombrep, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                                        .addComponent(direccionp))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(45, 45, 45)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnactualizar)
-                                            .addComponent(btnagregarusuario)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(37, 37, 37)
-                                        .addComponent(btnsalir))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(boxAlergiasp, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(55, 55, 55)
-                                .addComponent(btnAlergias)))))
+                                .addComponent(btnAlergias)))
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(limpiar)
+                            .addComponent(btnactualizar)
+                            .addComponent(btnagregarusuario)
+                            .addComponent(btnsalir))))
                 .addContainerGap(238, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -208,14 +227,15 @@ public class VentanaPaciente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boxAlergiasp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAlergias))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAlergias)
+                    .addComponent(limpiar))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
+                        .addGap(30, 30, 30)
                         .addComponent(btnactualizar)
-                        .addGap(35, 35, 35)
+                        .addGap(33, 33, 33)
                         .addComponent(btnagregarusuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(42, 42, 42)
                         .addComponent(btnsalir))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -242,11 +262,22 @@ public class VentanaPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_apellidopActionPerformed
 
     private void btnAlergiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlergiasActionPerformed
-       String alergiaSelected = (String) boxAlergiasp.getSelectedItem();
        
-       String textoAnterior = listAlergiasp.getText();
-       String nuevoTexto = textoAnterior + "\n" + alergiaSelected;
-       listAlergiasp.setText(nuevoTexto);
+        String cc = idp.getText();
+        
+        
+        if("".equals(idp.getText())){
+            JOptionPane.showMessageDialog(this, "Poner la identificacion");
+        }else{
+            String alergiaSelected = (String) boxAlergiasp.getSelectedItem();
+            String textoAnterior = listAlergiasp.getText();
+            String nuevoTexto = textoAnterior + "\n" + alergiaSelected;
+            modelopaciente paciente = informacionPacientes.buscarPaciente(cc);
+            listAlergiasp.setText(nuevoTexto);
+            paciente.setAlergias(nuevoTexto);
+        }
+        
+       
        
        
        
@@ -270,6 +301,8 @@ public class VentanaPaciente extends javax.swing.JFrame {
             apellidop.setText(paciente.getApellidop());
             telefonop.setText(String.valueOf(paciente.getTelefonop()));
             direccionp.setText(paciente.getDireccionp());
+            listAlergiasp.setText(paciente.getAlergias().toString());
+            
             
     }        // TODO add your handling code here:
     }//GEN-LAST:event_btnbuscarActionPerformed
@@ -290,6 +323,43 @@ public class VentanaPaciente extends javax.swing.JFrame {
         // Mostrar un mensaje indicando que el paciente se ha agregado correctamente
         JOptionPane.showMessageDialog(this, "agregado Exitosamente");
     }//GEN-LAST:event_btnagregarusuarioActionPerformed
+
+    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
+        String nombre = nombrep.getText();
+        String apellido = apellidop.getText();
+        String cc = idp.getText();
+        String direccion = direccionp.getText();
+        String telefono = telefonop.getText();
+
+        modelopaciente paciente = informacionPacientes.buscarPaciente(cc);
+
+        if (paciente != null) {
+            paciente.setApellidop(apellido);
+            paciente.setNombrep(nombre);
+            paciente.setDireccionp(direccion);
+            paciente.setTelefonop(telefono);
+
+            JOptionPane.showMessageDialog(this, "actualizada correctamente");
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "no está registrado");
+        }   
+    }//GEN-LAST:event_btnactualizarActionPerformed
+
+    private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
+        nombrep.setText("");
+        apellidop.setText("");
+        idp.setText("");
+        direccionp.setText("");
+        telefonop.setText("");
+        listAlergiasp.setText("");
+        
+        JOptionPane.showMessageDialog(this, "Limpieza correctamente");
+    }//GEN-LAST:event_limpiarActionPerformed
+
+    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
+       System.exit(0);
+    }//GEN-LAST:event_btnsalirActionPerformed
 
  
 
@@ -312,6 +382,7 @@ public class VentanaPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton limpiar;
     public javax.swing.JTextArea listAlergiasp;
     public javax.swing.JTextField nombrep;
     public javax.swing.JTextField telefonop;
