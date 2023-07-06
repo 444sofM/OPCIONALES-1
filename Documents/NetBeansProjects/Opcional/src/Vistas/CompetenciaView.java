@@ -5,7 +5,6 @@ package Vistas;
 import Dao.DeportistaImplementsDAO;
 import Modelos.Deportes;
 import Modelos.Deportista;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -17,8 +16,6 @@ public class CompetenciaView extends javax.swing.JFrame {
 
     private DeportistaImplementsDAO datosDeportista;
     private DefaultComboBoxModel<String> comboBoxModel;
-    //private Deportista deportistaSeleccionado;
-    //private DeportistaController controlador;
 
     public CompetenciaView(DeportistaImplementsDAO DAO ) {
         //this.controlador = controlador;
@@ -122,22 +119,22 @@ public class CompetenciaView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2))
-                                .addGap(36, 36, 36)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nombresText, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                                    .addComponent(deportesBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(apellidosText)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(Actualizar)
                                     .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(identificacionText)))
-                        .addGap(53, 53, 53)
+                                .addComponent(identificacionText, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2))
+                                .addGap(41, 41, 41)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(nombresText, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(apellidosText, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(deportesBox, 0, 183, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cancelarbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(eliminarbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -195,14 +192,28 @@ public class CompetenciaView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    
+ 
     
     private void grabarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grabarbtnActionPerformed
-        int identificacion = Integer.parseInt(identificacionText.getText());
+         // Obtener los valores ingresados en los campos
+        int identificacion;
+        try {
+            identificacion = Integer.parseInt(identificacionText.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese una identificación válida", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método sin continuar
+        }
+
         String apellidos = apellidosText.getText();
         String nombres = nombresText.getText();
         String tipoDeporte = deportesBox.getSelectedItem().toString();
+
+        // Validar que todos los campos estén completos
+        if (identificacion == 0 || apellidos.isEmpty() || nombres.isEmpty() || tipoDeporte.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe llenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método sin continuar
+        }
+
         // Crear un nuevo objeto Deportista con los datos ingresados
         Deportista deportista = new Deportista(identificacion, apellidos, nombres, tipoDeporte);
 
@@ -211,6 +222,7 @@ public class CompetenciaView extends javax.swing.JFrame {
 
         // Mostrar un mensaje indicando que el deportista se ha agregado correctamente
         JOptionPane.showMessageDialog(this, "El deportista ha sido agregado correctamente");
+        System.out.println(datosDeportista);
 
         // Obtener el contenido actual del TextArea
         String contenidoActual = CampoDatos.getText();
@@ -226,7 +238,6 @@ public class CompetenciaView extends javax.swing.JFrame {
 
         // Mostrar la información en el TextArea
         CampoDatos.setText(nuevoContenido);
-    
     }//GEN-LAST:event_grabarbtnActionPerformed
 
     private void cancelarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarbtnActionPerformed
@@ -237,8 +248,52 @@ public class CompetenciaView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cancelarbtnActionPerformed
 
+    private void actualizarContenidoTextArea() {
+        StringBuilder contenido = new StringBuilder();
+
+        // Recorrer la lista de deportistas y agregar la información al StringBuilder
+        for (Deportista deportista : datosDeportista.obtenerTodosLosDeportistas()) {
+            contenido.append("Identificación: ").append(deportista.getIdentificacion()).append("\n");
+            contenido.append("Apellidos: ").append(deportista.getApellidos()).append("\n");
+            contenido.append("Nombres: ").append(deportista.getNombres()).append("\n");
+            contenido.append("Deporte: ").append(deportista.getTipoDeporte()).append("\n");
+            contenido.append("--------------------------------------\n");
+        }
+
+        // Establecer el contenido del JTextArea con el texto generado
+        CampoDatos.setText(contenido.toString());
+        }
+    
     private void eliminarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarbtnActionPerformed
-        
+        // Obtener la identificación del deportista a eliminar
+        int identificacion;
+        try {
+            identificacion = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la identificación del deportista a eliminar"));
+        } catch (NumberFormatException e) {
+            System.out.println("");
+            return; // Salir del método sin continuar
+        }
+
+        // Verificar si el deportista existe en el objeto DatosDeportista
+        if (datosDeportista.existeDeportista(identificacion)) {
+            // Eliminar el deportista del objeto DatosDeportista
+            datosDeportista.eliminarDeportista(identificacion);
+
+            // Mostrar un mensaje indicando que el deportista ha sido eliminado correctamente
+            JOptionPane.showMessageDialog(this, "El deportista ha sido eliminado correctamente");
+
+            // Limpiar los campos de texto
+            identificacionText.setText("");
+            apellidosText.setText("");
+            nombresText.setText("");
+            deportesBox.setSelectedIndex(0); // O seleccionar un valor predeterminado si lo deseas
+
+            // Actualizar el contenido del TextArea con la lista actualizada de deportistas
+            actualizarContenidoTextArea();
+        } else {
+            // Mostrar un mensaje indicando que no se encontró un deportista con esa identificación
+            JOptionPane.showMessageDialog(this, "No se encontró un deportista con esa identificación");
+        }
     }//GEN-LAST:event_eliminarbtnActionPerformed
 
     private void salirbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirbtnActionPerformed
@@ -246,26 +301,42 @@ public class CompetenciaView extends javax.swing.JFrame {
     }//GEN-LAST:event_salirbtnActionPerformed
 
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
-        // Obtener los datos ingresados en los campos de texto
-        int identificacion = Integer.parseInt(identificacionText.getText());
-        String apellidos = apellidosText.getText();
-        String nombres = nombresText.getText();
+       try {
+            int identificacion = Integer.parseInt(identificacionText.getText());
+            String apellidos = apellidosText.getText();
+            String nombres = nombresText.getText();
+            String tipoDeporte = deportesBox.getSelectedItem().toString();
 
-        // Verificar si el paciente existe
-        Deportista deportista = datosDeportista.buscarDeportista(identificacion);
+            // Verificar si los campos de texto están vacíos
+            if (apellidos.isEmpty() || nombres.isEmpty() || tipoDeporte.isEmpty()) {
+                throw new Exception("Los campos están vacíos");
+            }
 
-        if (deportista != null) {
-            // Actualizar los datos del paciente
-            deportista.setApellidos(apellidos);
-            deportista.setNombres(nombres);
+            // Verificar si el deportista existe
+            if (datosDeportista.buscarDeportista(identificacion) != null) {
+                // Actualizar la información del deportista
+                Deportista deportista = new Deportista(identificacion, apellidos, nombres, tipoDeporte);
+                datosDeportista.actualizarDeportista(deportista);
 
-            // Mostrar un mensaje indicando que la información se ha actualizado correctamente
-            JOptionPane.showMessageDialog(this, "La información del paciente ha sido actualizada correctamente");
-        } else {
-            // Mostrar un mensaje indicando que el paciente no está registrado
-            JOptionPane.showMessageDialog(this, "El paciente no está registrado");
+                // Mostrar mensaje de éxito
+                JOptionPane.showMessageDialog(this, "La información del deportista ha sido actualizada correctamente");
+
+                // Limpiar los campos de texto
+                identificacionText.setText("");
+                apellidosText.setText("");
+                nombresText.setText("");
+                deportesBox.setSelectedIndex(0); // Establecer el índice seleccionado en el primer elemento
+
+                // Actualizar el contenido del TextArea con la información actualizada
+                actualizarContenidoTextArea();
+            } else {
+                // Mostrar mensaje de error si el deportista no existe
+                JOptionPane.showMessageDialog(this, "No se encontró un deportista con esa identificación");
+            }
+        } catch (Exception e) {
+            // Mostrar mensaje de error si los campos están vacíos
+            JOptionPane.showMessageDialog(this, "Los campos están vacíos. No hay nada que actualizar");
         }
-        
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void deportesBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deportesBoxActionPerformed

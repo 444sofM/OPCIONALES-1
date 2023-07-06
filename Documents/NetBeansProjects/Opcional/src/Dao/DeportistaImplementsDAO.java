@@ -1,7 +1,4 @@
-/*
-Estudiante :Ana Mezu-2225958
-Opcional 1 
-Profesor :Luis Romo*/
+
 package Dao;
 
 import Modelos.Deportes;
@@ -39,7 +36,12 @@ public class DeportistaImplementsDAO{
     public List<Deportes> obtenerTodasLoDeporteses() {
     return deportes;
     }
-
+    
+    public List<Deportista> obtenerTodosLosDeportistas() {
+        List<Deportista> listaDeportistas = new ArrayList<>(deportistas.values());
+        return listaDeportistas;
+    }
+    
     public Deportista buscarDeportista(int identificacion) {
         return deportistas.get(identificacion);
     }
@@ -59,5 +61,13 @@ public class DeportistaImplementsDAO{
     
     public void agregarDeporte(Deportes deporte) {
         deportes.add(deporte);
+    }
+    
+    public boolean existeDeportista(int identificacion) {
+        return deportistas.containsKey(identificacion);
+    }
+
+    public void eliminarDeportista(int identificacion) {
+        deportistas.remove(identificacion);
     }
 }

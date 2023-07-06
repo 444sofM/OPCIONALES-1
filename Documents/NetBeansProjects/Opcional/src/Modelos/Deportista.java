@@ -1,9 +1,4 @@
-/*
-Estudiante :Ana Mezu-2225958
-Opcional 1 
-Profesor :Luis Romo
 
-*/
 package Modelos;
 
 
