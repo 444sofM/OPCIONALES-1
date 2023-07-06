@@ -2,10 +2,10 @@
 Estudiante :Ana Mezu-2225958
 Opcional 1 
 Profesor :Luis Romo*/
-package DAO;
+package Dao;
 
-import Model.Deportes;
-import Model.Deportista;
+import Modelos.Deportes;
+import Modelos.Deportista;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -1,7 +1,7 @@
 /*Estudiante :Ana Mezu-2225958
 Opcional 1 
 Profesor :Luis Romo*/
-package Model;
+package Modelos;
 
 public class Deportes {
     private String nombre;

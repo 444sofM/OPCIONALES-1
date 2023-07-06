@@ -1,11 +1,11 @@
 /*Estudiante :Ana Mezu-2225958
 Opcional 1 
 Profesor :Luis Romo*/
-package Controller;
+package Controladores;
 
-import DAO.DeportistaImplementsDAO;
-import Model.Deportes;
-import Model.Deportista;
+import Dao.DeportistaImplementsDAO;
+import Modelos.Deportes;
+import Modelos.Deportista;
 import java.util.List;
 
 

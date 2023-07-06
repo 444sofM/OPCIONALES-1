@@ -2,9 +2,9 @@
 package Vistas;
 
 
-import DAO.DeportistaImplementsDAO;
-import Model.Deportes;
-import Model.Deportista;
+import Dao.DeportistaImplementsDAO;
+import Modelos.Deportes;
+import Modelos.Deportista;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
