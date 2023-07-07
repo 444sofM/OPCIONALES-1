@@ -1,4 +1,9 @@
-
+/*
+Estudiante :Ana Mezu Vargas 
+Codigo:2225958
+OPCIONAL
+Profesor :Luis Romo 
+*/
 package Dao;
 
 import Modelos.Deportes;
@@ -9,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 
-public class DeportistaImplementsDAO{
+public class DeportistaImplementsDAO implements DeportistaDAO{
     private Map<Integer, Deportista> deportistas;
     private List<Deportes> deportes;
-
+    
     public DeportistaImplementsDAO() {
         deportistas = new HashMap<>();
         deportes = new ArrayList<>();
@@ -69,5 +74,11 @@ public class DeportistaImplementsDAO{
 
     public void eliminarDeportista(int identificacion) {
         deportistas.remove(identificacion);
+    }
+
+    @Override
+    public List<Deportes> obtenerTodosLosDeportes() {
+        
+        return deportes;
     }
 }
